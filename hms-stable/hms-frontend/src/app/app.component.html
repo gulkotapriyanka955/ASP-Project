@@ -1,0 +1,95 @@
+<mat-toolbar class="mat-elevation-z8" color="primary">
+    <!-- <div fxHide.gt-xs>
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div> -->
+    <mat-icon class="icon">medical_services</mat-icon>
+
+    <a routerLink="/home">
+        <span class="margin-left-10">HOSPITAL MANAGEMENT</span>
+    </a>
+    <span class="div-spacer"></span>
+    <div fxLayout="row" fxHide.lt-md>
+        <h3 style="margin-left: 10px;">
+            <a *ngIf="!userService.isUserLoggedIn() " routerLink="/home/admin-login">
+                <button mat-button>
+                    <mat-icon mat-icon-button class="icon">admin_panel_settings</mat-icon><span> Admin Login</span>
+                </button>
+            </a>
+        </h3>
+
+        <h3 style="margin-left: 10px;">
+            <a routerLink="/home/patient-login" *ngIf="!userService.isUserLoggedIn()">
+                <button mat-button>
+                    <mat-icon mat-icon-button class="icon">medical_services</mat-icon><span> Patient Login</span>
+                </button>
+            </a>
+        </h3>
+
+        <h3 style="margin-left: 10px;">
+            <a routerLink="/home/doctor-login" *ngIf="!userService.isUserLoggedIn()">
+                <button mat-button>
+                    <mat-icon mat-icon-button class="icon">medical_services</mat-icon><span> Doctor Login</span>
+                </button>
+            </a>
+        </h3>
+
+        <h3 style="margin-left: 10px;" *ngIf="userService.isAdminLoggedIn()">
+            <a>
+                <button mat-button (click)='openDoctorRegisterForm()'>
+                    <mat-icon mat-icon-button class="icon">person_add </mat-icon><span>Add Doctor</span>
+                </button>
+            </a>
+        </h3>
+
+        <h3 style="margin-left: 10px;">
+            <a>
+                <button mat-button (click)='openPatientRegisterForm()' *ngIf="userService.isAdminLoggedIn()">
+                    <mat-icon mat-icon-button class="icon">person_add </mat-icon><span>Add Patient</span>
+                </button>
+            </a>
+        </h3>
+
+        <h3 style="margin-left: 10px;">
+            <a *ngIf="userService.isUserLoggedIn()">
+                <button mat-button (click)="userService.logOut()">
+                    <mat-icon mat-icon-button class="icon">logout</mat-icon><span>Log Out</span>
+                </button>
+            </a>
+        </h3>
+    </div>
+    <h3 style="margin-left: 10px;">
+        <mat-icon class="icon" [matMenuTriggerFor]="menu" fxShow.lt-md fxHide>menu_open</mat-icon>
+        <mat-menu #menu="matMenu">
+            <div class="column">
+                <a *ngIf="!userService.isUserLoggedIn()" routerLink="/home/admin-login">
+                    <button mat-button>
+                        <mat-icon mat-icon-button class="icon">admin_panel_settings</mat-icon>Admin Login
+                    </button>
+                </a>
+                <a routerLink="/home/doctor-login" *ngIf="!userService.isUserLoggedIn()">
+                    <button mat-button>
+                        <mat-icon mat-icon-button class="icon">medical_services</mat-icon> Doctor Login
+                    </button>
+                </a>
+                <a routerLink="/home/patient-login" *ngIf="!userService.isUserLoggedIn()">
+                    <button mat-button>
+                        <mat-icon mat-icon-button class="icon">medical_services</mat-icon>Patient Login
+                    </button>
+                </a>
+                <button *ngIf="userService.isAdminLoggedIn()" mat-button (click)='openDoctorRegisterForm()'>
+                    <mat-icon mat-icon-button class="icon">person_add </mat-icon>Add Doctor
+                </button>
+                <button *ngIf="userService.isAdminLoggedIn()" mat-button (click)='openPatientRegisterForm()'>
+                    <mat-icon mat-icon-button class="icon">person_add </mat-icon>Add Patient
+                </button>
+                <button *ngIf="userService.isUserLoggedIn()" mat-button (click)="userService.logOut()">
+                    <mat-icon mat-icon-button class="icon">logout</mat-icon>Log Out
+                </button>
+            </div>
+        </mat-menu>
+    </h3>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

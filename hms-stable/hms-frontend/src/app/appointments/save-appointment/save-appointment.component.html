@@ -1,0 +1,135 @@
+<div class='align'>
+    <mat-card>
+        <mat-card-content>
+            <mat-card-title>
+                <h4 *ngIf="!appointment?.id" class="align"> Book New Appointment </h4>
+                <h4 *ngIf="appointment?.id" class="align"> Update Appointment </h4>
+
+            </mat-card-title>
+            <form [formGroup]='appointmentForm'>
+                <div class="column">
+                    <mat-form-field class="align" appearance="outline" class="margin-top-10">
+                        <mat-label>Issue</mat-label>
+                        <mat-select formControlName="issue" [compareWith]="compareBy">
+                            <mat-option *ngFor="let issue of issues" [value]="issue"> {{issue.type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="margin-top-10">
+                        <mat-label>Doctor</mat-label>
+                        <mat-select formControlName="doctor" [compareWith]="compareBy">
+                            <mat-option *ngFor="let doctor of doctors" [value]="doctor"> {{doctor.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="margin-top-10">
+                        <mat-label>Fee</mat-label> <input matInput placeholder="Fee" formControlName="fee"
+                            [disabled]="true">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="margin-top-10">
+                        <mat-label>Select Date</mat-label>
+                        <input matInput formControlName="date" [min]="minDate" [matDatepickerFilter]="dateFilter" [matDatepicker]="dp3" [disabled]="true">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="margin-top-10">
+                        <mat-label>Time</mat-label>
+                        <mat-select formControlName="time">
+                            <mat-option *ngFor="let time of timeIntervals" [value]="time"> {{time}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="appointmentForm.get('time')?.hasError('required')">
+                            select a time slot
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="margin-left-10">
+                        <button *ngIf="appointment?.status === 'BOOKED'" mat-raised-button class="margin-left-10"
+                            color="primary" (click)="saveAppointment()" [disabled]="appointmentForm.invalid">Save
+                            Appointment</button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-content *ngIf="!appointmentForm.invalid && appointment?.status !== 'BOOKED'">
+            <mat-card-title>
+                <h4 class="align"> Card Details </h4>
+            </mat-card-title>
+            <form [formGroup]="paymentForm">
+                <div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="First Name" formControlName="firstName" required>
+                            <mat-error *ngIf="paymentForm.get('firstName')?.hasError('required')">
+                                First Name is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name</mat-label> <input matInput placeholder="Last Name"
+                                formControlName="lastName" required>
+                            <mat-error *ngIf="paymentForm.get('lastName')?.hasError('required')">
+                                Last Name is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Card Number</mat-label>
+                            <input type="text" matInput placeholder="Card Number" formControlName="cardNumber"
+                                required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+                                    Card Number is <strong>Required</strong>
+                                </span>
+                                <span *ngIf="!paymentForm.get('cardNumber')?.hasError('pattern') && paymentForm.get('cardNumber')?.hasError('minlength')">
+                                    Card Number should be of <strong>16 digits</strong>
+                                </span>
+                                <span *ngIf="!paymentForm.get('cardNumber')?.hasError('pattern') && paymentForm.get('cardNumber')?.hasError('maxlength')">
+                                    Card Number should be of <strong>16 digits</strong>
+                                </span>
+                                <span *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">
+                                    Card Number should be of type <strong>Number</strong>
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>CVV</mat-label> <input matInput type="password" placeholder="CVV (Enter 3 digits)"
+                                formControlName="cvv" required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('cvv')?.hasError('required')">
+                                    CVV is <strong>Required</strong>
+                                </span>
+                                <span *ngIf="paymentForm.get('cvv')?.hasError('minlength') || paymentForm.get('cvv')?.hasError('maxlength')">
+                                    CVV should be of <strong>3 digits</strong>
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Expiry month/year</mat-label> <input matInput placeholder="MM/YY"
+                                formControlName="expiry" required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('expiry')?.hasError('required')">
+                                    Expiry month/year <strong>Required</strong>
+                                </span>
+                                <span *ngIf="paymentForm.get('expiry')?.hasError('pattern')">
+                                    expiry should be in <strong>mm/yy</strong> (month/year) format
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row margin-left-10"> <b>TOTAL</b><span class="div-spacer "></span><span
+                            class="margin-right-10"><b>{{appointmentForm.get('fee')?.value}}</b></span> </div>
+                    <div class="row" style="margin:10px">
+                        <button mat-raised-button class="margin-top-10" color="primary" (click)="saveAppointment()"
+                            [disabled]="paymentForm.invalid">Schedule Appointment</button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

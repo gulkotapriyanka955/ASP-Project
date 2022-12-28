@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8 container">
+    <mat-card>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="name"> {{doctor.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="age">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="age"> {{doctor.age}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="specialization">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Specialization </mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="specialization"> {{doctor.specialization?.type}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fee">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fee</mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="fee"> {{doctor.fee}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="email"> {{doctor.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="number">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Number </mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="number"> {{doctor.number}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let doctor" data-label="action">
+                    <button mat-icon-button color="primary" (click)="editDoctor(doctor)">
+                        <mat-icon>edit </mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteDoctor(doctor.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let doctor; columns: displayedColumns;"></mat-row>
+
+            <!-- Row shown when mat-header-cellere is no matching data. -->
+            <tr *matNoDataRow>
+                <td colspan="6">No Data</td>
+            </tr>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card>
+</div>

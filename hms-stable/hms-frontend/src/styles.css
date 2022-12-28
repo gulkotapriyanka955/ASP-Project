@@ -1,0 +1,183 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import '@angular/material/prebuilt-themes/pink-bluegrey.css'; */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+body {
+    /* min-height: 100vh; */
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+}
+
+.full-div {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 55px;
+    backdrop-filter: blur(2px);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.div-spacer {
+    flex: 1 1 auto;
+}
+
+.align {
+    display: flex;
+    justify-content: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.back {
+    display: flex;
+    flex-direction: row;
+    margin: 0px !important;
+}
+
+.margin-left-10 {
+    margin-left: 10px !important;
+}
+
+.margin-right-10 {
+    margin-right: 10px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.red-snackbar {
+    position: absolute !important;
+    background-color: #fff;
+    color: #000;
+    top: 54px;
+}
+
+
+.style-success {
+    position: absolute !important;
+    color: #fff;
+    background-color: green;
+    top: 54px;
+    right: 0px;
+}
+
+.style-success .mat-simple-snackbar-action {
+    color: #fff;
+}
+
+.style-error {
+    position: absolute !important;
+    color: #fff;
+    background-color: rgb(231, 4, 4);
+    top: 54px;
+    right: 0px;
+}
+
+.style-error .mat-simple-snackbar-action {
+    color: #fff;
+}
+
+.bg-img {
+    position: fixed;
+    min-height: 100%;
+    background-image: url(assets/hms.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: 599px) {
+    .mat-table {
+        border: 0;
+        vertical-align: middle
+    }
+
+    .mat-cell:first-child,
+    .mat-footer-cell:first-child,
+    .mat-header-cell:first-child {
+        padding-left: 0;
+    }
+
+    .mat-cell:last-child,
+    .mat-footer-cell:last-child,
+    .mat-header-cell:last-child {
+        padding-right: 0;
+    }
+
+    .mat-table caption {
+        font-size: 1em;
+    }
+
+    .mat-table .mat-header-cell {
+        border: 10px solid;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .mat-table .mat-header-row {
+        min-height: 5px;
+    }
+
+    .mat-table .mat-row {
+        border-bottom: 5px solid #ddd;
+        display: block;
+    }
+
+    .mat-table .mat-cell {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: 1em;
+        text-align: right;
+        min-height: 30px;
+        margin-bottom: 4%;
+    }
+
+    .mat-table .mat-cell:before {
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+        font-weight: normal;
+        font-weight: bold;
+        font-size: .85em;
+    }
+
+    .mat-table .mat-cell:last-child {
+        border-bottom: 0;
+    }
+
+    .mat-table .mat-cell:first-child {
+        margin-top: 4%;
+    }
+
+    .mat-stepper-horizontal .mat-horizontal-content-container {
+        padding: 0px !important;
+    }
+}

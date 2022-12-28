@@ -1,0 +1,52 @@
+<div class="mat-elevation-z8 container">
+    <mat-card>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Name"> {{patient.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="age">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Age"> {{patient.age}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="gender">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Gender"> {{patient.gender}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Email"> {{patient.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="number">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Number </mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Number"> {{patient.number}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let patient" data-label="Actions">
+                    <button mat-icon-button color="primary" (click)="editPatient(patient)">
+                        <mat-icon>edit </mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deletePatient(patient.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let patient; columns: displayedColumns;"></mat-row>
+
+            <!-- Row shown when mat-header-cellere is no matching data. -->
+            <tr *matNoDataRow>
+                <td colspan="6">No Data</td>
+            </tr>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card>
+</div>

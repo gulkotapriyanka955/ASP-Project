@@ -1,0 +1,77 @@
+<div class="bg-img full-div">
+    <div class="align">
+        <h2 style="margin:50px;">Welcome to Hospital Portal</h2>
+    </div>
+    <div class="align" *ngIf="!userService.isUserLoggedIn() && user && user?.role">
+        <mat-card>
+            <mat-card-title>
+                <p class="align">
+                    <span *ngIf="user?.role==='ADMIN'">
+                        Admin
+                    </span>
+                    <span *ngIf="user?.role==='PATIENT'">
+                        Patient
+                    </span>
+                    <span *ngIf="user?.role==='DOCTOR'">
+                        Doctor
+                    </span>
+                    &nbsp;Login
+                </p>
+            </mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="loginForm">
+                    <div class="column">
+                        <mat-form-field appearance="outline">
+                            <mat-icon matPrefix>person_outline</mat-icon>
+                            <mat-label>User Name : </mat-label>
+                            <input type="text" matInput placeholder="enter the Username" formControlName="loginId">
+                            <mat-error *ngIf="loginForm.get('loginId')?.hasError('required')">
+                                Username is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <span style="margin:10px"></span>
+                        <mat-form-field appearance="outline">
+                            <mat-icon matPrefix>lock_outline</mat-icon>
+                            <mat-label>Password : </mat-label>
+                            <input type="password" matInput placeholder="enter password" formControlName="password">
+                            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                                Password is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-error *ngIf="invalidDetails">
+                            <p class="align">Username or Password is Incorrect</p>
+                        </mat-error>
+                        <mat-card-subtitle *ngIf="user?.role === 'PATIENT'">
+                            new user? <a routerLink="/add-patient">register here</a>
+                        </mat-card-subtitle>
+                        <mat-card-subtitle *ngIf="user?.role === 'DOCTOR'">
+                            new user? <a routerLink="/add-doctor">register here</a>
+                        </mat-card-subtitle>
+                        <div class="margin-top-10 row">
+                            <div class="margin-top-10">
+                                <a routerLink="/home/forgot-password">
+                                    <p>Forgot password?</p>
+                                </a>
+                            </div>
+                            <span class="div-spacer"></span>
+                            <div>
+                                <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid"
+                                    (click)='login()'>LOGIN</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="align" *ngIf="userService.isUserLoggedIn()">
+        <mat-card>
+
+            <h2 class="align"> You are already Logged In </h2>
+
+
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div>
+    <h3>Add new unavailable date</h3>
+    <tr>
+        <td colspan="2">
+            <mat-form-field appearance="outline" class="margin-top-10">
+                <mat-label>Select Date</mat-label>
+                <input matInput [(ngModel)]="newDate" [min]="minDate" [matDatepicker]="dp2" [disabled]="true">
+                <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+            </mat-form-field>
+        </td>
+        <td>
+            <button mat-icon-button color="primary" matTooltip="Save appointment" (click)="saveUnavailability()">
+                <mat-icon>save</mat-icon>
+            </button>
+        </td>
+    </tr>
+</div>
+<mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+        <mat-cell *matCellDef="let unavailability" data-label="name">
+            {{unavailability.id}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Unavailable Date </mat-header-cell>
+        <mat-cell *matCellDef="let unavailability" data-label="age">
+            <div *ngIf="editId !== unavailability.id">{{unavailability.date}}</div>
+            <div *ngIf="editId === unavailability.id">
+                <mat-form-field appearance="outline" class="margin-top-10">
+                    <mat-label>Select Date</mat-label>
+                    <input matInput [(ngModel)]="date" [min]="minDate" [matDatepicker]="dp3" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let unavailability" data-label="actions">
+            <button *ngIf="editId !== unavailability.id" mat-icon-button color="primary"
+                (click)="editElement(unavailability)">
+                <mat-icon>edit </mat-icon>
+            </button>
+            <button *ngIf="editId !== unavailability.id" mat-icon-button color="warn"
+                (click)="deleteUnavailability(unavailability)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button *ngIf="editId === unavailability.id" mat-icon-button color="primary" matTooltip="Save appointment"
+                (click)="saveUnavailability(unavailability)">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button *ngIf="editId === unavailability.id" mat-icon-button color="warn" matTooltip="Cancel Edit"
+                (click)="cancelEdit()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let unavailability; columns: displayedColumns;"></mat-row>
+    <!-- Row shown when mat-header-cellere is no matching data. -->
+    <tr *matNoDataRow>
+        <td colspan="3">No Data</td>
+    </tr>
+</mat-table>

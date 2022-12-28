@@ -1,0 +1,195 @@
+<div class='align'>
+    <mat-card>
+        <mat-card-title>
+            <h4 class="align">
+                Add New Patient
+            </h4>
+        </mat-card-title>
+        <mat-card-content>
+            <form [formGroup]='patientForm'>
+                <div class=column>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Patient Name</mat-label>
+                        <input matInput placeholder="Patient Name" type="text" formControlName="name">
+                        <mat-error *ngIf="patientForm.get('name')?.hasError('required')">
+                            Name is <strong>Required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput placeholder="Age" type="number" formControlName="age">
+                        <mat-error>
+                            <span *ngIf="patientForm.get('age')?.hasError('required')">
+                                Age is <strong>Required</strong>
+                            </span>
+                            <span *ngIf="patientForm.get('age')?.hasError('minlength')">
+                                Age should be of more than <strong>0</strong>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Blood Group</mat-label>
+                        <mat-select formControlName="bloodGroup" [compareWith]="compareBy">
+                            <mat-option *ngFor="let bloodGroup of bloodGroups" [value]="bloodGroup">
+                                {{bloodGroup.replace('_', ' ')}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="patientForm.get('bloodGroup')?.hasError('required')">
+                            Blood Group is <strong>Required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender" [compareWith]="compareBy">
+                            <mat-option *ngFor="let gender of genders" [value]="gender">
+                                {{gender.toString().toLowerCase()}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="patientForm.get('gender')?.hasError('required')">
+                            Gender is <strong>Required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Patient Email" type="email" formControlName="email">
+                        <mat-error *ngIf="patientForm.get('email')?.hasError('required')">
+                            Email is <strong>Required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="patientForm.get('email')?.hasError('email')">
+                            Email not <strong>Valid</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact Number</mat-label>
+                        <input matInput placeholder="Contact Number" type="text" formControlName="contactNumber">
+                        <mat-error>
+                            <span *ngIf="patientForm.get('contactNumber')?.hasError('required')">
+                                Contact Number is <strong>Required</strong>
+                            </span>
+                            <span
+                                *ngIf="!patientForm.get('contactNumber')?.hasError('pattern') &&
+                                (patientForm.get('contactNumber')?.hasError('minlength') || patientForm.get('contactNumber')?.hasError('minlength'))">
+                                Contact Number should be of <strong>10 digits</strong>
+                            </span>
+                            <span *ngIf="patientForm.get('contactNumber')?.hasError('pattern')">
+                                Contact Number should be of type <strong>Number</strong>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" type="password" formControlName="password">
+                        <mat-error *ngIf="patientForm.get('password')?.hasError('required')">
+                            Password is <strong>Required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="patientForm.get('password')?.hasError('passwordStrength')">
+                            Password Strength <strong>Weak</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput placeholder="Confirm Password" type="password"
+                            formControlName="confirmPassword">
+                        <mat-error *ngIf="patientForm.get('confirmPassword')?.hasError('required')">
+                            Confirm your <strong>Password</strong>
+                        </mat-error>
+                        <mat-error *ngIf="patientForm.get('confirmPassword')?.hasError('passwordStrength')">
+                            Password Strength <strong>Weak</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-error *ngIf="patientForm.hasError('passwordValidator')">
+                        Passwords Do not <strong>Match</strong>
+                    </mat-error>
+                </div><br>
+            </form>
+        </mat-card-content>
+        <mat-card-content>
+            <mat-card-title>
+                <h4 class="align"> Card Details </h4>
+            </mat-card-title>
+            <form [formGroup]="paymentForm">
+                <div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="First Name" formControlName="firstName" required>
+                            <mat-error *ngIf="paymentForm.get('firstName')?.hasError('required')">
+                                First Name is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name</mat-label> <input matInput placeholder="Last Name"
+                                formControlName="lastName" required>
+                            <mat-error *ngIf="paymentForm.get('lastName')?.hasError('required')">
+                                Last Name is <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Card Number</mat-label>
+                            <input type="text" matInput placeholder="Card Number" formControlName="cardNumber" required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+                                    Card Number is <strong>Required</strong>
+                                </span>
+                                <span
+                                    *ngIf="!paymentForm.get('cardNumber')?.hasError('pattern') && paymentForm.get('cardNumber')?.hasError('minlength')">
+                                    Card Number should be of <strong>16 digits</strong>
+                                </span>
+                                <span
+                                    *ngIf="!paymentForm.get('cardNumber')?.hasError('pattern') && paymentForm.get('cardNumber')?.hasError('maxlength')">
+                                    Card Number should be of <strong>16 digits</strong>
+                                </span>
+                                <span *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">
+                                    Card Number should be of type <strong>Number</strong>
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>CVV</mat-label> <input matInput type="password"
+                                placeholder="CVV (Enter 3 digits)" formControlName="cvv" required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('cvv')?.hasError('required')">
+                                    CVV is <strong>Required</strong>
+                                </span>
+                                <span
+                                    *ngIf="paymentForm.get('cvv')?.hasError('minlength') || paymentForm.get('cvv')?.hasError('maxlength')">
+                                    CVV should be of <strong>3 digits</strong>
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Expiry month/year</mat-label> <input matInput placeholder="MM/YY"
+                                formControlName="expiry" required>
+                            <mat-error>
+                                <span *ngIf="paymentForm.get('expiry')?.hasError('required')">
+                                    Expiry month/year <strong>Required</strong>
+                                </span>
+                                <span *ngIf="paymentForm.get('expiry')?.hasError('pattern')">
+                                    expiry should be in <strong>mm/yy</strong> (month/year) format
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+            <button mat-raised-button (click)="utilService.back()" color="primary">Back
+            </button>
+            <span style="margin:17px;"></span>
+
+            <button mat-raised-button (click)="savePatient()" color="primary" [disabled]="patientForm.invalid">Save
+                Patient
+            </button>
+        </mat-card-content>
+    </mat-card>
+</div>

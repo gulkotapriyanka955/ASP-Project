@@ -1,0 +1,34 @@
+<div>
+    <h3 class="margin-left-10">Patient History</h3>
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Doctor Name">
+            <mat-header-cell *matHeaderCellDef>Doctor</mat-header-cell>
+            <mat-cell *matCellDef="let appointment" data-label="Doctor Name">{{appointment?.doctor?.name}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Issue">
+            <mat-header-cell *matHeaderCellDef>Issue</mat-header-cell>
+            <mat-cell *matCellDef="let appointment" data-label="Issue">{{appointment?.issue?.type}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Date">
+            <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+            <mat-cell *matCellDef="let appointment" data-label="Date">{{appointment?.date}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Prescription">
+            <mat-header-cell *matHeaderCellDef>Prescription</mat-header-cell>
+            <mat-cell *matCellDef="let appointment" data-label="Prescription">
+                {{appointment?.prescription || 'not issued'}}
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let appointment; columns: displayedColumns;"></mat-row>
+        <!-- Row shown when mat-header-cellere is no matching data. -->
+        <tr *matNoDataRow>
+            <td colspan="3">No Data</td>
+        </tr>
+    </mat-table>
+</div>

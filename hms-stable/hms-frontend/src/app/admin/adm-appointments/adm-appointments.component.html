@@ -1,0 +1,66 @@
+<div class="mat-elevation-z8 container">
+    <mat-card>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="Doctor">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Doctor </mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="doctor"> {{appointment.doctor?.name || 'doctor does not exist'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Patient">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Patient </mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="patient"> {{appointment.patient?.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Issue">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Issue </mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="Issue"> {{appointment.issue?.type}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Fee">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fee</mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="fee"> {{appointment.doctor?.fee}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Scheduled Slot">
+                <mat-header-cell *matHeaderCellDef>Scheduled Slot</mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="Scheduled Slot">{{appointment?.date | date:
+                    'dd/MM/yyyy'}} at
+                    {{appointment?.time}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Status">
+                <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="Status">{{appointment.status}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Prescription">
+                <mat-header-cell *matHeaderCellDef>Prescription</mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="Prescription">
+                    <span>
+                        {{appointment?.prescription || 'not issued'}}
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let appointment" data-label="action">
+                    <button mat-icon-button color="primary" (click)="editAppointment(appointment)">
+                        <mat-icon>edit </mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteAppointment(appointment.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let appointment; columns: displayedColumns;"></mat-row>
+
+            <!-- Row shown when mat-header-cellere is no matching data. -->
+            <tr *matNoDataRow>
+                <td colspan="6">No Appointments</td>
+            </tr>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card>
+</div>

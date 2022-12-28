@@ -1,0 +1,48 @@
+<div>
+    <mat-card>
+        <mat-card-title>
+            <div class="back">
+                <!-- <button style="padding: 0px;" mat-button (click)="utilService.back()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button> -->
+                <h3>Doctor Information</h3>
+            </div>
+        </mat-card-title>
+
+        <mat-card-content>
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let doctor" data-label="Name">{{doctor.name}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Specialization">
+                    <mat-header-cell *matHeaderCellDef>Specialization</mat-header-cell>
+                    <mat-cell *matCellDef="let doctor" data-label="Specialization">{{doctor.specialization.type}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Gender">
+                    <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+                    <mat-cell *matCellDef="let doctor" data-label="Gender">{{doctor.gender}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Number">
+                    <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+                    <mat-cell *matCellDef="let doctor" data-label="Number">{{doctor.number}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </mat-card-content>
+        <mat-card-actions>
+            <button class="margin-left-10" mat-raised-button color="primary" (click)='openDialog()'>Update
+                Avaliability</button>
+            <span style="margin:10px;"></span>
+            <button mat-raised-button color="primary" class="margin-top-10" (click)='editDoctor()'>Edit
+                profile</button>
+            <span style="margin:6px;"></span>
+
+        </mat-card-actions>
+    </mat-card>
+</div>
+<app-appointments [doctorId]="doctor?.id"></app-appointments>
